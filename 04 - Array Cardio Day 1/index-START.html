@@ -30,29 +30,102 @@
     const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
 
     // Array.prototype.filter()
+    // gets only the objects in the array that pertain to the filtered parameters
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteen = inventors.filter(inventor => (inventor.year >= 1500 && inventor.year < 1600));
+
+    // magic table!
+    // console.table(fifteen);
 
     // Array.prototype.map()
+    // takes in an array, does something with it, and returns a new array with the same length as the original
+    // "like a factory machine that takes in a raw material, stamps it, and kicks out that item on the other end"
     // 2. Give us an array of the inventors' first and last names
+    const fullNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`);
+
+    // console.log(fullNames);
 
     // Array.prototype.sort()
+    // returns either 1 or -1 to compare and organize items in an array
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    // const oldToYoung = inventors.sort(function(a, b) {
+    //   if (a.year > b.year) {
+    //     return 1;
+    //   } else {
+    //     return -1;
+    //   }
+    // });
+
+    // ternary function to reduce the above version
+    const ordered = inventors.sort((a, b) => a.year > b.year ? 1 : -1)
+
+    // console.table(ordered);
+
     // Array.prototype.reduce()
+    // allows you to build something on every single item, often getting a total
     // 4. How many years did all the inventors live?
 
+    // in this case, total is the last value + then new value in the iteration
+    const totalYears = inventors.reduce((total, inventor) => {
+      // console.log(total + (inventor.passed - inventor.year));
+      return total + (inventor.passed - inventor.year);
+    }, 0); // we used 0 to specify that the very starting value is at 0, which we need to then add to the total for the next iteration
+
+    // console.log(totalYears);
+
     // 5. Sort the inventors by years lived
+    const oldest = inventors.sort(function(a, b) {
+      const lastPerson = a.passed - a.year;
+      const nextPerson = b.passed - b.year;
+
+      return lastPerson > nextPerson ? -1 : 1;
+    });
+
+    // console.table(oldest);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+    // const category = document.querySelector('.mw-category');
+    // // es6 spread will spread every item form the node into an Array
+    // // array.from would have also worked but is the old way
+    // const links = [...category.querySelectorAll('a')];
+    //
+    // const de = links
+    //               .map(link => link.textContent)
+    //               .filter(streetName => streetName.includes('de'));
+    //
+    //
+    // console.log(de);
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    const alphaName = people.sort(function(lastOne, nextOne) {
+      const [aLast, aFirst] = lastOne.split(', ');
+      const [bLast, bFirst] = nextOne.split(', ');
+      return aLast > bLast ? 1 : -1;
+    });
+
+    console.log(alphaName);
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const sum = data.reduce(function(obj, item) {
+      // 2. we loop over every item and determine if there is one. This starts us at 0.
+      if (!obj[item]) {
+        obj[item] = 0;
+      }
+      // 3. we add 1 every time there's a new item to get us the total items in that object
+      obj[item]++;
+      return obj;
+    }, {}); // 1. we start with this blank obj
+
+    console.log(sum);
 
   </script>
 </body>
