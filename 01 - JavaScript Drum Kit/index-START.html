@@ -69,7 +69,7 @@ function playSound(e) {
   audio.currentTime = 0; // rewind to the start
   // plays the .wav src associated with the file!
   audio.play();
-  
+
   key.classList.add('playing');
 }
 
@@ -78,7 +78,7 @@ function removeTransition(e) {
   this.classList.remove('playing'); // this = the key bc it's what we performed the event listener on
 }
 
-// make an array of all the key elements
+// make a node list of all the key elements
 const keys = document.querySelectorAll('.key');
 // loop each key element in the array, add an event listener that removes the transition when it ends
 keys.forEach(key => key.addEventListener('transitionend', removeTransition));
